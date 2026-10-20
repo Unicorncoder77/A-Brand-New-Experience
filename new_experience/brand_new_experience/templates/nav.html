@@ -1,0 +1,23 @@
+{% extends "master.html" %}
+
+{% block title %}
+Nav Bar 
+{% endblock %}
+
+{% block content %}
+
+<div class="topNav">
+    <ul>
+        {% if user.is_authenticated %}
+        {% else %}
+            <li><a href="{% url 'home' %}"> Home </a></li>
+            <li><a href="#"> About </a></li>
+            <li><a href="#"> Blog </a></li>
+            <li><a href="#"> Review </a></li>
+            <li><a href="#"> Login </a></li>
+            <li><a href="#"> Find Bugs? </a></li>
+    </ul>
+</div>
+{% endif %}
+
+{% endblock %}

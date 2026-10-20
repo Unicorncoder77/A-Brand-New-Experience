@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_bootstrap4',
+    'brand_new_experience',
 ]
 
 MIDDLEWARE = [
@@ -75,7 +78,7 @@ WSGI_APPLICATION = 'new_experience.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'the_new_experience',
+        'NAME': 'a_brand_new_experience',
         'USER': 'hanna',
         'PASSWORD': 'iAmAw3bDe$ignEr',
         'HOST': '100.116.242.47',
@@ -123,6 +126,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = BASE_DIR / 'productionfiles'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'staticfiles'
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
