@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'brand_new_experience',
 ]
 
+AUTH_USER_MODEL = 'brand_new_experience.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

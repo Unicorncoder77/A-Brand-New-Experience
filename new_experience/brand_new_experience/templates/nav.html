@@ -8,13 +8,15 @@ Nav Bar
 
 <div class="topNav">
     <ul>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and user.is_reviewer %}
+        {% elif user.is_authenticated and user.is_blogger %}
+        {% elif user.is_authenticated and user.is_admin %}
         {% else %}
             <li><a href="{% url 'home' %}"> Home </a></li>
             <li><a href="#"> About </a></li>
             <li><a href="#"> Blog </a></li>
             <li><a href="#"> Review </a></li>
-            <li><a href="#"> Login </a></li>
+            <li><a href="{% url 'signup' %}"> Register / Login </a></li>
             <li><a href="#"> Find Bugs? </a></li>
     </ul>
 </div>
