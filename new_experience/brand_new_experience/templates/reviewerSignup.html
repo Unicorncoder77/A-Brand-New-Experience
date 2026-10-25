@@ -5,50 +5,9 @@ Reviewer Signup
 {% endblock %}
 {% block content %}
 {% include "nav.html" %}
-<style>
-    body {
-        height:100vh;
-        display: flex; 
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-        background-size: cover;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .form-container {
-        max-width: 320px;
-        width: 100%;
-        padding: 40px;
-        box-shadow: 0 0 10px black;
-        background: transparent;
-        border-radius: 30px;
-        text-align: center;
-        backdrop-filter: blur(20px);
-    }
-</style>
-<div class="form-container">
-    <div class="form-header">
-        <h3> Sign Up </h3>
-    </div>
-    <div class="input-container">
-        <form method="POST">
-            {% csrf_token %}
-            {{ reviewerRegisterForm.username.label }} {{ reviewerRegisterForm.username }}
-            {{ reviewerRegisterForm.email.label }} {{ reviewerRegisterForm.email}}
-            {{ reviewerRegisterForm.password.label }} {{ reviewerRegisterForm.password }}
-        <div class="button">
-            <button class="submit" type="submit">Sign Up</button>
-        </div>
-        <div class="signup">
-            <p> Already have an account? <a href="#">Log In</a></p>
-        </div>
-        </form>
-    
-    </div>
-</div>
-
-
-
+<form method="POST" class="form-group">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Register</button>
+</form>
 {% endblock %}
