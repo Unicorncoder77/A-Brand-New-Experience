@@ -18,13 +18,15 @@ class reviewerRegisterForm(forms.ModelForm):
         fields = ['username', 'email', 'password']
 
     @transaction.atomic 
-    def save(self):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.is_reviewer = True
         regPass = self.cleaned_data.get('password')
         user.set_password(regPass)
-        user.save()
-        reviewer = Reviewer.objects.create(user=user)
+        if commit:
+             
+            user.save()
+            reviewer = Reviewer.objects.create(user=user)
 
         return user
 
@@ -44,19 +46,25 @@ class bloggerRegisterForm(forms.ModelForm):
             fields = ['username', 'email', 'password']
 
     @transaction.atomic 
-    def save(self):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.is_blogger = True 
         regPass = self.cleaned_data.get('password')
         user.set_password(regPass)
-        user.save()
+        
         
 
         bloggerPen = self.cleaned_data.get('penname')
         bloggerFirst = self.cleaned_data.get('fName')
         bloggerLast = self.cleaned_data.get('lName')
         bloggerEmail = self.cleaned_data.get('email')
-        blogger = Blogger.objects.create(user=user, username=bloggerPen, first_name=bloggerFirst, last_name=bloggerLast, email=bloggerEmail)
+        if commit:
+            user.save()
+                     
+            blogger = Blogger.objects.create(user=user, username=bloggerPen, first_name=bloggerFirst, last_name=bloggerLast, email=bloggerEmail)
 
         return user
-    
+
+class bloggerLoginForm(forms.Form):
+    penname = forms.CharField(label="Pen Name", max_length=40, widget=forms.TextInput)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'id':'password'}))

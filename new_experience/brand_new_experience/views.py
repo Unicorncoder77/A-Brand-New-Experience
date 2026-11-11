@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import reviewerRegisterForm
+from .forms import reviewerRegisterForm, reviewerLoginForm, bloggerRegisterForm, bloggerLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 
@@ -9,13 +9,21 @@ def home(request):
     return render(request, 'index.html')
 
 
-def loginPortal(request):
-    pass 
+def creatorPortal(request):
+    context = {}
+    bloggerSignup = bloggerRegisterForm()
+    bloggerLogin = bloggerLoginForm()
+
+    if (request.method == "POST"):
+        if ('login' in request.POST):
+            bloggerLogin = bloggerLoginForm(request.POST)
+            if (bloggerLogin.is_valid()):
+                blogger = authenticate(request, username=bloggerLoginForm)
+
 
 
 def reviewerSignUp(request):
     form = reviewerRegisterForm()
-    
     if (request.method == 'POST'):
         form = reviewerRegisterForm(request.POST)
         if (form.is_valid()):
@@ -30,17 +38,35 @@ def reviewerSignUp(request):
             form = reviewerRegisterForm()
     return render(request, 'reviewerSignup.html', {'form': form})
 
+def reviewerLogin(request):
+    form = reviewerLoginForm()
+    if (request.method == 'POST'):
+        form = reviewerLoginForm(request.POST)
+        if (form.is_valid()):
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+
+            if (user is not None):
+                login(request, user)
+
+                return redirect('reviewerHome')
+            else:
+                print("Authentication failed")
+                return render(request, 'reviewerLogin.html', context={'form':form})
+
+    return render(request, 'reviewerLogin.html', {'form': form})
 
 
-def bloggerSignUp(request):
-    pass
+'''def bloggerSignUp(request):
+    pass'''
 
 @login_required
 def reviewerHome(request):
-    return render(request, 'reviewerHome.html')
+    context = {
+        'user' : request.user
+    }
+    return render(request, 'reviewerHome.html', context)
 
-def reviewerLogin(request):
-    pass 
+
 
 def logoutUser(request):
     logout(request)
